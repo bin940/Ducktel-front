@@ -7,10 +7,8 @@
       "config": { "distDir": "dist" }
     }
   ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
+  "installCommand": "npm install --unsafe-perm", 
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
