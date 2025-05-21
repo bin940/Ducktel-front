@@ -1,11 +1,16 @@
 {
   "version": 2,
-
-  "installCommand": "npm install --unsafe-perm",
-  "buildCommand": "npm run build",
-
-  "outputDirectory": "dist",
-
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist",
+        "installCommand": "npm install --unsafe-perm",
+        "buildCommand": "npm run build"
+      }
+    }
+  ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]
