@@ -83,10 +83,9 @@ export default {
   },
 
   handleSocialLoginCallback() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const accessToken = urlParams.get("accessToken");
-    const refreshToken = urlParams.get("refreshToken");
-    const loginType = urlParams.get("loginType");
+    const accessToken = this.$route.query.accessToken;
+    const refreshToken = this.$route.query.refreshToken;
+    const loginType = this.$route.query.loginType;
 
     if (accessToken && refreshToken && loginType) {
       console.log("소셜 로그인 성공 - 토큰:", accessToken);
