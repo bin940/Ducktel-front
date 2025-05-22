@@ -31,10 +31,9 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   console.log(`Navigating: from=${from.fullPath}, to=${to.fullPath}`);
 
-  const queryParams = new URLSearchParams(window.location.search);
-  const accessToken = queryParams.get("accessToken");
-  const refreshToken = queryParams.get("refreshToken");
-  const loginType = queryParams.get("loginType");
+  const accessToken = to.query.accessToken;
+  const refreshToken = to.query.refreshToken;
+  const loginType = to.query.loginType;
 
   if (accessToken) {
     console.log("accessToken 감지됨, 저장 시작");
