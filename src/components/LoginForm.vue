@@ -79,11 +79,7 @@ export default {
   },
 
   socialLogin(provider) {
-    const redirectUri = `${window.location.origin}/login?redirect=${encodeURIComponent(this.$route.fullPath)}`;
-    const authUrl = `http://localhost:8090/oauth2/authorization/${provider}?redirect_uri=${encodeURIComponent(redirectUri)}`;
-
-    console.log(`소셜 로그인 리다이렉트: ${authUrl}`);
-    window.location.href = authUrl;
+    window.location.href = `https://www.ducktel.uk/oauth2/authorization/${provider}`;
   },
 
   handleSocialLoginCallback() {
