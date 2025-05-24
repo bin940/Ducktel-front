@@ -74,6 +74,10 @@ export default {
           })
           .catch(error => {
             console.error("로그아웃 실패:", error.response?.data?.message || error.message);
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("loginType");
+            this.isLoggedIn = false;
+            this.$router.push("/");
           });
     }
   }
