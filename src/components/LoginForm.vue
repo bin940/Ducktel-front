@@ -79,7 +79,7 @@ export default {
   },
 
   socialLogin(provider) {
-    window.location.href = `https://api.ducktel.uk/oauth2/authorization/${provider}`;
+    window.location.href = `/oauth2/authorization/${provider}`;
   },
 
   handleSocialLoginCallback() {

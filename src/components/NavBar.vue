@@ -31,8 +31,21 @@ export default {
   methods: {
     checkLoginStatus() {
       const token = localStorage.getItem("accessToken");
-      console.log("accessToken:", token);
-      this.isLoggedIn = !!token;
+
+      if (!token) {
+        this.isLoggedIn = false;
+        return;
+      }
+
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        const now = Math.floor(Date.now() / 1000);
+
+        this.isLoggedIn = payload.exp && payload.exp > now;
+      } catch (err) {
+        console.warn("JWT 디코딩 실패:", err);
+        this.isLoggedIn = false;
+      }
     },
     handleAuth() {
       if (this.isLoggedIn) {
@@ -42,28 +55,26 @@ export default {
       }
     },
     logout() {
-      const refreshToken = localStorage.getItem("refreshToken");
       const loginType = localStorage.getItem("loginType");
 
-      // if (!refreshToken || !loginType) {
-      //   console.error("로그아웃 실패: 저장된 로그인 정보 없음");
-      //   return;
-      // }
+      if (!loginType) {
+        console.error("로그아웃 실패: 로그인 타입이 없습니다");
+        return;
+      }
 
-      api.post("/api/auth/logout", { refreshToken, loginType })
-        .then(response => {
-          console.log("로그아웃 성공:", response.data);
+      api.post("/api/auth/logout", { loginType }, { withCredentials: true }) // ✅ loginType 포함
+          .then(response => {
+            console.log("로그아웃 성공:", response.data);
 
-          localStorage.removeItem("accessToken");
-          localStorage.removeItem("refreshToken");
-          localStorage.removeItem("loginType");
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("loginType");
 
-          this.isLoggedIn = false;
-          this.$router.push("/");
-        })
-        .catch(error => {
-          console.error("로그아웃 실패:", error.response?.data?.message || error.message);
-        });
+            this.isLoggedIn = false;
+            this.$router.push("/");
+          })
+          .catch(error => {
+            console.error("로그아웃 실패:", error.response?.data?.message || error.message);
+          });
     }
   }
 };

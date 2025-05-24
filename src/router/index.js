@@ -14,13 +14,13 @@ const routes = [
   { path: "/", name: "Home", component: HomePage },
   { path: "/login", name: "Login", component: LoginForm },
   { path: "/register", name: "Register", component: RegisterForm },
-  { path: "/mypage", name: "MyPage", component: MyPage },
+  { path: "/mypage", name: "MyPage", component: MyPage, meta: { requiresAuth: true } },
   { path: "/profile", name: "Profile", component: UserProfile, meta: { requiresAuth: true } },
   { path: "/booking", name: "Booking", component: UserBooking, meta: { requiresAuth: true } },
   { path: "/home/:category", name: "CategoryHome", component: SubHome },
   { path: "/home/:category/:location", name: "LocationHome", component: LocationHome },
   { path: "/places/:accommodationId/:checkInDate/:checkOutDate", name: "PlaceDetail", component: Places },
-  { path: "/payment", name: "PaymentPage", component: PaymentPage },
+  { path: "/payment", name: "PaymentPage", component: PaymentPage, meta: { requiresAuth: true }},
 ];
 
 const router = createRouter({
@@ -32,13 +32,11 @@ router.beforeEach((to, from, next) => {
   console.log(`Navigating: from=${from.fullPath}, to=${to.fullPath}`);
 
   const accessToken = to.query.accessToken;
-  const refreshToken = to.query.refreshToken;
   const loginType = to.query.loginType;
 
   if (accessToken) {
     console.log("accessToken 감지됨, 저장 시작");
     localStorage.setItem("accessToken", accessToken);
-    localStorage.setItem("refreshToken", refreshToken);
     localStorage.setItem("loginType", loginType);
     
     if (to.path === "/login") {
