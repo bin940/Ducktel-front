@@ -62,7 +62,7 @@ export default {
         return;
       }
 
-      api.post("/api/auth/logout", { loginType }, { withCredentials: true }) //  loginType 포함
+      api.post("https://api.ducktel.uk/api/auth/logout", { loginType }, { withCredentials: true }) //  loginType 포함
           .then(response => {
             console.log("로그아웃 성공:", response.data);
 
