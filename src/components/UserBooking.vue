@@ -57,7 +57,7 @@ export default {
   methods: {
     async fetchReservations() {
       try {
-        const response = await api.get("/api/users/book");
+        const response = await api.get("/api/book");
         const result = response.data;
         if (result.status === 200 && !result.errorCode) {
           this.reservations = result.data;
