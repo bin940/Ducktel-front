@@ -41,7 +41,6 @@ export default {
   data() {
   return {
     paymentData: {
-      userId: this.$route.query.userId || "guest",
       accommodationId: this.$route.query.accommodationId,
       roomId: this.$route.query.roomId,
       name: "", 
